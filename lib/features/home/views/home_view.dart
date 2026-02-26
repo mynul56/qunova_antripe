@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+
 import '../../../../core/theme/app_colors.dart';
 import '../controllers/home_controller.dart';
-import 'widgets/blob_shape.dart';
 import 'widgets/category_chip.dart';
 import 'widgets/contact_item.dart';
 
@@ -441,26 +442,15 @@ class HomeView extends GetView<HomeController> {
 
           // Floating Action Button
           Positioned(
-            right: 20, // 50 offset from the scroll indicator roughly
-            bottom: 40,
-            child: Container(
+            left: 294,
+            top: 724,
+            child: SizedBox(
               width: 64,
               height: 64,
-              decoration: ShapeDecoration(
-                color: AppColors.primary,
-                shape: const BlobShape(),
-                shadows: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.15),
-                    offset: const Offset(2, 6),
-                    blurRadius: 20,
-                  ),
-                ],
-              ),
-              child: const Icon(
-                LucideIcons.plus,
-                color: Colors.white,
-                size: 32,
+              child: SvgPicture.asset(
+                'assets/floating_action_button/icon.svg',
+                width: 64,
+                height: 64,
               ),
             ),
           ),
