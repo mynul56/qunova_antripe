@@ -69,6 +69,11 @@ class HomeController extends GetxController
         categories.assignAll(data.categories);
       }
 
+      // Initialize selectedCategoryId to the first category's id
+      if (categories.isNotEmpty) {
+        _selectedCategoryId.value = categories.first.id;
+      }
+
       // Filter out empty contact stubs returned by the API
       allContacts.assignAll(data.contacts.where((c) => !c.isEmpty));
 
