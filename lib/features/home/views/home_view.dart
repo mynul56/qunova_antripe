@@ -575,26 +575,64 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget _buildEmptyState() {
+    final screenWidth = MediaQuery.of(Get.context!).size.width;
+    final scale = screenWidth / 390.0;
+
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(LucideIcons.searchX, size: 64, color: Colors.grey.shade300),
-          const SizedBox(height: 16),
-          const Text(
-            'No contacts found',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: Color(0xFF64758B),
+      child: Container(
+        width: 342 * scale,
+        padding: EdgeInsets.symmetric(
+          horizontal: 40 * scale,
+          vertical: 48 * scale,
+        ),
+        decoration: BoxDecoration(
+          color: const Color(0xFFF0F6FF),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Ee! No Contacts found.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 20 * scale,
+                fontWeight: FontWeight.w500,
+                height: 24 / 20,
+                color: const Color(0xFF475569), // Slate/600
+              ),
             ),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'Try adjusting your search or category',
-            style: TextStyle(fontSize: 14, color: Color(0xFF94A3B8)),
-          ),
-        ],
+            SizedBox(height: 24 * scale),
+            InkWell(
+              onTap: () {
+                // Future: Implement add contact
+              },
+              borderRadius: BorderRadius.circular(60),
+              child: Container(
+                width: 216 * scale,
+                height: 56 * scale,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF098268),
+                  borderRadius: BorderRadius.circular(60),
+                ),
+                child: Center(
+                  child: Text(
+                    'Add New Contact',
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 16 * scale,
+                      fontWeight: FontWeight.w500,
+                      height: 20 / 16,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
