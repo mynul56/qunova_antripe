@@ -93,14 +93,59 @@ class SplashView extends GetView<SplashController> {
                 duration: const Duration(milliseconds: 600),
                 curve: Curves.easeInOut,
                 top: isVisible ? (178 * scale) : (274 * scale),
-                child: AnimatedContainer(
+                child: AnimatedScale(
                   duration: const Duration(milliseconds: 600),
                   curve: Curves.easeInOut,
-                  width: isVisible ? (126 * scale) : (171 * scale),
-                  height: isVisible ? (123.24 * scale) : (168 * scale),
-                  child: SvgPicture.asset(
-                    'assets/splash_logo/logo.svg',
-                    fit: BoxFit.contain,
+                  scale: isVisible ? (126 / 171) : 1.0,
+                  alignment: Alignment.topCenter,
+                  child: SizedBox(
+                    width: 171 * scale,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SvgPicture.asset(
+                          'assets/splash_logo/logo.svg',
+                          height:
+                              106 * scale, // SVG height relative to 168px total
+                          fit: BoxFit.contain,
+                        ),
+                        SizedBox(height: 2 * scale), // gap 2px
+                        ShaderMask(
+                          blendMode: BlendMode.srcIn,
+                          shaderCallback: (bounds) => const LinearGradient(
+                            colors: [Color(0xFF098268), Color(0xFFF59A15)],
+                            stops: [0.45, 1.0],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                          ).createShader(bounds),
+                          child: Text(
+                            'Qunova',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize:
+                                  32 *
+                                  scale, // Fits within 38px height container
+                              fontWeight: FontWeight.w700,
+                              height: 1.1,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 2 * scale), // minor gap
+                        Text(
+                          'Make Life Easy',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 13 * scale,
+                            height: 1.5,
+                            letterSpacing: 6 * scale,
+                            color: const Color(0xFF717171),
+                          ),
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );
