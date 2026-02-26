@@ -13,6 +13,9 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final scale = screenWidth / 390.0;
+
     return Scaffold(
       backgroundColor: const Color(
         0xFFF8FAFC,
@@ -213,12 +216,12 @@ class HomeView extends GetView<HomeController> {
           ),
 
           // Scroll Navigation Indicator Overlay as per CSS
-          const Positioned(
-            right: 8,
-            top: 226,
+          Positioned(
+            right: 8 * scale,
+            top: 226 * scale,
             child: SizedBox(
-              width: 6,
-              height: 621,
+              width: 6 * scale,
+              height: 621 * scale,
               // Represents the alphabet scroll list (A-Z)
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -527,16 +530,16 @@ class HomeView extends GetView<HomeController> {
 
           // Floating Action Button
           Positioned(
-            left: 276, // 294 - 18px internal SVG padding
-            top: 790, // 724 - 14px internal SVG padding
+            right: 20 * scale,
+            bottom: 30 * scale,
             child: SizedBox(
-              width: 104, // Full viewBox size including shadows
-              height: 104,
+              width: 104 * scale,
+              height: 104 * scale,
               child: SvgPicture.asset(
                 'assets/floating_action_button/icon.svg',
-                width: 104,
-                height: 104,
-                fit: BoxFit.none,
+                width: 104 * scale,
+                height: 104 * scale,
+                fit: BoxFit.contain,
               ),
             ),
           ),

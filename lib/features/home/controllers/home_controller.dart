@@ -53,9 +53,16 @@ class HomeController extends GetxController {
     try {
       final data = await _homeService.fetchContacts();
 
-      // Add "All" category at the beginning
-      final allCategory = Category(id: 'all', name: 'All');
-      categories.assignAll([allCategory, ...data.categories]);
+      // Add "All" category at the beginning only if it doesn't exist
+      final bool hasAll = data.categories.any(
+        (c) => c.id.toLowerCase() == 'all',
+      );
+      if (!hasAll) {
+        final allCategory = Category(id: 'all', name: 'All');
+        categories.assignAll([allCategory, ...data.categories]);
+      } else {
+        categories.assignAll(data.categories);
+      }
 
       // Filter out empty contact stubs returned by the API
       allContacts.assignAll(data.contacts.where((c) => !c.isEmpty));
