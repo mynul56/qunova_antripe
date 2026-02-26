@@ -149,15 +149,16 @@ class HomeView extends GetView<HomeController> {
 
                 // Horizontal Categories Scroll
                 Obx(() {
-                  if (controller.categories.isEmpty) {
-                    return const SizedBox(height: 82);
+                  if (controller.isLoading && controller.categories.isEmpty) {
+                    return _buildCategoryLoading();
                   }
 
                   return SizedBox(
-                    height: 82,
+                    height: 90,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      physics: const BouncingScrollPhysics(),
                       itemCount: controller.categories.length,
                       itemBuilder: (context, index) {
                         final category = controller.categories[index];
@@ -178,33 +179,26 @@ class HomeView extends GetView<HomeController> {
                 // Main Contact List
                 Expanded(
                   child: Obx(() {
-                    if (controller.isLoading) {
-                      return const Center(
-                        child: CircularProgressIndicator(
-                          color: AppColors.primary,
-                        ),
-                      );
+                    if (controller.isLoading &&
+                        controller.allContacts.isEmpty) {
+                      return _buildListLoading();
                     }
 
                     if (controller.hasError) {
-                      return Center(child: Text(controller.errorMessage));
+                      return _buildErrorState();
                     }
 
                     if (controller.filteredList.isEmpty) {
-                      return const Center(
-                        child: Text(
-                          'No contacts found',
-                          style: TextStyle(color: Color(0xFF64758B)),
-                        ),
-                      );
+                      return _buildEmptyState();
                     }
 
                     return ListView.builder(
                       padding: const EdgeInsets.only(
                         left: 20.0,
                         right: 20.0,
-                        bottom: 80.0,
+                        bottom: 100.0,
                       ), // Bottom padding for FAB
+                      physics: const BouncingScrollPhysics(),
                       itemCount: controller.filteredList.length,
                       itemBuilder: (context, index) {
                         return ContactItem(
@@ -547,6 +541,102 @@ class HomeView extends GetView<HomeController> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildCategoryLoading() {
+    return SizedBox(
+      height: 90,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        itemCount: 5,
+        itemBuilder: (context, index) => Container(
+          margin: const EdgeInsets.symmetric(horizontal: 12.0),
+          width: 56,
+          height: 56,
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            color: Color(0xFFF1F5F9),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildListLoading() {
+    return const Center(
+      child: CircularProgressIndicator(color: AppColors.primary),
+    );
+  }
+
+  Widget _buildEmptyState() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(LucideIcons.searchX, size: 64, color: Colors.grey.shade300),
+          const SizedBox(height: 16),
+          const Text(
+            'No contacts found',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF64758B),
+            ),
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            'Try adjusting your search or category',
+            style: TextStyle(fontSize: 14, color: Color(0xFF94A3B8)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildErrorState() {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(32.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(
+              LucideIcons.alertCircle,
+              size: 64,
+              color: Colors.redAccent,
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'Oops! Something went wrong',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              controller.errorMessage,
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: Colors.grey),
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: controller.fetchData,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 32,
+                  vertical: 12,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: const Text('Try Again'),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -52,7 +52,10 @@ class HomeController extends GetxController {
     _hasError.value = false;
     try {
       final data = await _homeService.fetchContacts();
-      categories.assignAll(data.categories);
+
+      // Add "All" category at the beginning
+      final allCategory = Category(id: 'all', name: 'All');
+      categories.assignAll([allCategory, ...data.categories]);
 
       // Filter out empty contact stubs returned by the API
       allContacts.assignAll(data.contacts.where((c) => !c.isEmpty));

@@ -30,18 +30,28 @@ class CategoryChip extends StatelessWidget {
               height: 56,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: const Color(0xFFC4C4C4),
+                color: isSelected
+                    ? AppColors.primary.withValues(alpha: 0.1)
+                    : const Color(0xFFF1F5F9),
                 border: isSelected
                     ? Border.all(color: const Color(0xFF0B836A), width: 2)
                     : null,
-                image: DecorationImage(
-                  // Placeholder logic since category image isn't in API, but required by CSS
-                  image: NetworkImage(
-                    'https://i.pravatar.cc/150?img=${category.id.hashCode % 70}',
-                  ),
-                  fit: BoxFit.cover,
-                ),
+                image: category.id == 'all'
+                    ? null
+                    : DecorationImage(
+                        // Placeholder logic since category image isn't in API, but required by CSS
+                        image: NetworkImage(
+                          'https://i.pravatar.cc/150?img=${category.id.hashCode % 70}',
+                        ),
+                        fit: BoxFit.cover,
+                      ),
               ),
+              child: category.id == 'all'
+                  ? Icon(
+                      Icons.apps,
+                      color: isSelected ? AppColors.primary : Colors.grey,
+                    )
+                  : null,
             ),
             const SizedBox(height: 4),
             // Category Text

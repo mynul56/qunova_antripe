@@ -46,12 +46,12 @@ class SplashView extends GetView<SplashController> {
             Obx(() {
               final isVisible = controller.isWelcomeVisible;
               return AnimatedPositioned(
-                duration: const Duration(milliseconds: 600),
-                curve: Curves.easeInOut,
+                duration: const Duration(milliseconds: 1000),
+                curve: Curves.easeOutCubic,
                 left: isVisible ? (-318 * scale) : (-150 * scale),
                 top: isVisible ? (877 * scale) : (613 * scale),
                 child: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 600),
+                  duration: const Duration(milliseconds: 1000),
                   opacity: isVisible ? 0.0 : 1.0,
                   child: Container(
                     width: 353 * scale,
@@ -69,13 +69,13 @@ class SplashView extends GetView<SplashController> {
             Obx(() {
               final isVisible = controller.isWelcomeVisible;
               return AnimatedPositioned(
-                duration: const Duration(milliseconds: 600),
-                curve: Curves.easeInOut,
+                duration: const Duration(milliseconds: 1000),
+                curve: Curves.easeOutCubic,
                 left: isVisible ? (404 * scale) : (282 * scale),
                 top: -70 * scale,
                 child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 600),
-                  curve: Curves.easeInOut,
+                  duration: const Duration(milliseconds: 1000),
+                  curve: Curves.easeOutCubic,
                   width: isVisible ? (38 * scale) : (160 * scale),
                   height: isVisible ? (38 * scale) : (160 * scale),
                   decoration: const BoxDecoration(
@@ -89,62 +89,68 @@ class SplashView extends GetView<SplashController> {
             // Animated Logo
             Obx(() {
               final isVisible = controller.isWelcomeVisible;
+              final logoOpacity = controller.logoOpacity;
               return AnimatedPositioned(
-                duration: const Duration(milliseconds: 600),
-                curve: Curves.easeInOut,
+                duration: const Duration(milliseconds: 800),
+                curve: Curves.easeOutBack,
                 top: isVisible ? (178 * scale) : (274 * scale),
-                child: AnimatedScale(
-                  duration: const Duration(milliseconds: 600),
-                  curve: Curves.easeInOut,
-                  scale: isVisible ? (126 / 171) : 1.0,
-                  alignment: Alignment.topCenter,
-                  child: SizedBox(
-                    width: 171 * scale,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SvgPicture.asset(
-                          'assets/splash_logo/logo.svg',
-                          height:
-                              106 * scale, // SVG height relative to 168px total
-                          fit: BoxFit.contain,
-                        ),
-                        SizedBox(height: 2 * scale), // gap 2px
-                        ShaderMask(
-                          blendMode: BlendMode.srcIn,
-                          shaderCallback: (bounds) => const LinearGradient(
-                            colors: [Color(0xFF098268), Color(0xFFF59A15)],
-                            stops: [0.45, 1.0],
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                          ).createShader(bounds),
-                          child: Text(
-                            'Qunova',
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize:
-                                  32 *
-                                  scale, // Fits within 38px height container
-                              fontWeight: FontWeight.w700,
-                              height: 1.1,
+                child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 500),
+                  opacity: logoOpacity,
+                  child: AnimatedScale(
+                    duration: const Duration(milliseconds: 800),
+                    curve: Curves.easeOutBack,
+                    scale: isVisible ? (126 / 171) : 1.0,
+                    alignment: Alignment.topCenter,
+                    child: SizedBox(
+                      width: 171 * scale,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/splash_logo/logo.svg',
+                            height:
+                                106 *
+                                scale, // SVG height relative to 168px total
+                            fit: BoxFit.contain,
+                          ),
+                          SizedBox(height: 2 * scale), // gap 2px
+                          ShaderMask(
+                            blendMode: BlendMode.srcIn,
+                            shaderCallback: (bounds) => const LinearGradient(
+                              colors: [Color(0xFF098268), Color(0xFFF59A15)],
+                              stops: [0.45, 1.0],
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                            ).createShader(bounds),
+                            child: Text(
+                              'Qunova',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize:
+                                    32 *
+                                    scale, // Fits within 38px height container
+                                fontWeight: FontWeight.w700,
+                                height: 1.1,
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(height: 2 * scale), // minor gap
-                        Text(
-                          'Make Life Easy',
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                            fontSize: 13 * scale,
-                            height: 1.5,
-                            letterSpacing: 6 * scale,
-                            color: const Color(0xFF717171),
+                          SizedBox(height: 2 * scale), // minor gap
+                          Text(
+                            'Make Life Easy',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w400,
+                              fontSize: 13 * scale,
+                              height: 1.5,
+                              letterSpacing: 6 * scale,
+                              color: const Color(0xFF717171),
+                            ),
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
                           ),
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -155,8 +161,8 @@ class SplashView extends GetView<SplashController> {
             Obx(() {
               final isVisible = controller.isWelcomeVisible;
               return AnimatedPositioned(
-                duration: const Duration(milliseconds: 600),
-                curve: Curves.easeInOut,
+                duration: const Duration(milliseconds: 1000),
+                curve: Curves.fastOutSlowIn,
                 bottom: isVisible ? 0 : (-324 * scale),
                 child: Container(
                   width: screenWidth,
