@@ -103,29 +103,56 @@ class HomeView extends GetView<HomeController> {
                       right: 20.0,
                       bottom: 16.0,
                     ),
-                    child: TextField(
-                      controller: controller.searchController,
-                      onChanged: controller.onSearchChanged,
-                      decoration: InputDecoration(
-                        hintText: 'Search contacts...',
-                        hintStyle: const TextStyle(
-                          color: Color(0xFF94A3B8),
-                          fontSize: 14,
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
-                          borderSide: BorderSide(color: Colors.grey.shade200),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
-                          borderSide: BorderSide(color: Colors.grey.shade200),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 8,
-                          horizontal: 16,
-                        ),
+                    child: Container(
+                      height: 48 * scale,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(color: const Color(0xFFCBD5E1)),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: controller.searchController,
+                              onChanged: controller.onSearchChanged,
+                              style: const TextStyle(
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16,
+                                color: Color(0xFF475569), // Slate/600
+                              ),
+                              decoration: const InputDecoration(
+                                hintText: 'Search',
+                                hintStyle: TextStyle(
+                                  color: Color(0xFF94A3B8),
+                                  fontSize: 16,
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                border: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                contentPadding: EdgeInsets
+                                    .zero, // Padding handled by container
+                                isCollapsed: true,
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              controller.searchController.clear();
+                              controller.onSearchChanged('');
+                              controller.isSearchVisible.value = false;
+                            },
+                            child: const Icon(
+                              LucideIcons.x,
+                              size: 24,
+                              color: Color(0xFF4B5563),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   );
