@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -25,18 +26,18 @@ class SplashView extends GetView<SplashController> {
             Positioned(
               left: -110 * scale,
               top: -32 * scale,
-              child: Container(
-                width: 415 * scale,
-                height: 415 * scale,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.primary.withOpacity(0.2),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.primary.withOpacity(0.2),
-                      blurRadius: 166 * scale,
-                    ),
-                  ],
+              child: ImageFiltered(
+                imageFilter: ImageFilter.blur(
+                  sigmaX: 83 * scale,
+                  sigmaY: 83 * scale,
+                ), // CSS blur(166px) ~ sigma 83
+                child: Container(
+                  width: 415 * scale,
+                  height: 415 * scale,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.primary.withOpacity(0.2),
+                  ),
                 ),
               ),
             ),
