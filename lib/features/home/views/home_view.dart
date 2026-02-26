@@ -708,203 +708,210 @@ class HomeView extends GetView<HomeController> {
     controller.clearAddContactForm();
 
     Get.bottomSheet(
-      Container(
-        height: 576 * scale,
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(24),
-            topRight: Radius.circular(24),
-          ),
+      // Padding added to handle keyboard visibility
+      Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(Get.context!).viewInsets.bottom,
         ),
-        child: Column(
-          children: [
-            const SizedBox(height: 24),
-            // Handle
-            Container(
-              width: 151 * scale,
-              height: 6 * scale,
-              decoration: BoxDecoration(
-                color: const Color(0x998C8C8C),
-                borderRadius: BorderRadius.circular(16),
-              ),
+        child: Container(
+          height: 600 * scale, // Slightly increased to fit better with keyboard
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(24),
+              topRight: Radius.circular(24),
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.only(
-                  top: 72 * scale,
-                  left: 32 * scale,
-                  right: 32 * scale,
-                  bottom: 40 * scale,
+          ),
+          child: Column(
+            children: [
+              const SizedBox(height: 24),
+              // Handle
+              Container(
+                width: 151 * scale,
+                height: 6 * scale,
+                decoration: BoxDecoration(
+                  color: const Color(0x998C8C8C),
+                  borderRadius: BorderRadius.circular(16),
                 ),
-                child: Column(
-                  children: [
-                    // Name Field
-                    _buildBottomSheetField(
-                      controller: controller.nameController,
-                      hint: 'Name',
-                    ),
-                    const SizedBox(height: 16),
-                    // Phone Field
-                    _buildBottomSheetField(
-                      controller: controller.phoneController,
-                      hint: 'Phone',
-                      prefix: GestureDetector(
-                        onTap: () {
-                          showCountryPicker(
-                            context: Get.context!,
-                            showPhoneCode: true,
-                            onSelect: (Country country) {
-                              controller.updateCountry(
-                                country.flagEmoji,
-                                '+${country.phoneCode}',
-                              );
-                            },
-                          );
-                        },
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Obx(
-                              () => Text(
-                                controller.selectedCountryFlag.value,
-                                style: const TextStyle(fontSize: 20),
-                              ),
-                            ),
-                            const SizedBox(width: 4),
-                            const Icon(
-                              LucideIcons.chevronDown,
-                              size: 20,
-                              color: Color(0xFF4B5563),
-                            ),
-                            const SizedBox(width: 8),
-                            Obx(
-                              () => Text(
-                                controller.selectedCountryCode.value,
-                                style: const TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: 16,
-                                  color: Color(0xFF374151),
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.only(
+                    top: 60 * scale, // Adjusted
+                    left: 32 * scale,
+                    right: 32 * scale,
+                    bottom: 40 * scale,
+                  ),
+                  child: Column(
+                    children: [
+                      // Name Field
+                      _buildBottomSheetField(
+                        controller: controller.nameController,
+                        hint: 'Name',
+                      ),
+                      const SizedBox(height: 16),
+                      // Phone Field
+                      _buildBottomSheetField(
+                        controller: controller.phoneController,
+                        hint: 'Phone',
+                        prefix: GestureDetector(
+                          onTap: () {
+                            showCountryPicker(
+                              context: Get.context!,
+                              showPhoneCode: true,
+                              onSelect: (Country country) {
+                                controller.updateCountry(
+                                  country.flagEmoji,
+                                  '+${country.phoneCode}',
+                                );
+                              },
+                            );
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Obx(
+                                () => Text(
+                                  controller.selectedCountryFlag.value,
+                                  style: const TextStyle(fontSize: 20),
                                 ),
                               ),
-                            ),
-                            const SizedBox(width: 8),
-                          ],
+                              const SizedBox(width: 4),
+                              const Icon(
+                                LucideIcons.chevronDown,
+                                size: 20,
+                                color: Color(0xFF4B5563),
+                              ),
+                              const SizedBox(width: 8),
+                              Obx(
+                                () => Text(
+                                  controller.selectedCountryCode.value,
+                                  style: const TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 16,
+                                    color: Color(0xFF374151),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 16),
-                    // Designation Field
-                    _buildBottomSheetField(
-                      controller: controller.designationController,
-                      hint: 'Designation',
-                    ),
-                    const SizedBox(height: 16),
-                    // Company Field
-                    _buildBottomSheetField(
-                      controller: controller.companyController,
-                      hint: 'Company',
-                    ),
-                    const SizedBox(height: 16),
-                    // Relation Dropdown
-                    Container(
-                      height: 48 * scale,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: const Color(0xFFCBD5E1)),
-                        borderRadius: BorderRadius.circular(4),
+                      const SizedBox(height: 16),
+                      // Designation Field
+                      _buildBottomSheetField(
+                        controller: controller.designationController,
+                        hint: 'Designation',
                       ),
-                      child: Obx(
-                        () => DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            isExpanded: true,
-                            value:
-                                controller.selectedRelation.value == 'Relation'
-                                ? null
-                                : controller.selectedRelation.value,
-                            hint: const Text(
-                              'Relation',
+                      const SizedBox(height: 16),
+                      // Company Field
+                      _buildBottomSheetField(
+                        controller: controller.companyController,
+                        hint: 'Company',
+                      ),
+                      const SizedBox(height: 16),
+                      // Relation Dropdown
+                      Container(
+                        height: 48 * scale,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: const Color(0xFFCBD5E1)),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Obx(
+                          () => DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              isExpanded: true,
+                              value:
+                                  controller.selectedRelation.value ==
+                                      'Relation'
+                                  ? null
+                                  : controller.selectedRelation.value,
+                              hint: const Text(
+                                'Relation',
+                                style: TextStyle(
+                                  color: Color(0xFF475569),
+                                  fontFamily: 'Inter',
+                                  fontSize: 16,
+                                ),
+                              ),
+                              icon: const Icon(
+                                LucideIcons.chevronDown,
+                                color: Color(0xFF4B5563),
+                              ),
+                              items:
+                                  ['Family', 'Friends', 'Relative', 'Colleague']
+                                      .map(
+                                        (e) => DropdownMenuItem(
+                                          value: e,
+                                          child: Text(e),
+                                        ),
+                                      )
+                                      .toList(),
+                              onChanged: (val) {
+                                if (val != null)
+                                  controller.selectedRelation.value = val;
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      // CTA: Save
+                      InkWell(
+                        onTap: controller.saveContact,
+                        borderRadius: BorderRadius.circular(60),
+                        child: Container(
+                          height: 56,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF098268),
+                            borderRadius: BorderRadius.circular(60),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              'Save Contact',
                               style: TextStyle(
-                                color: Color(0xFF475569),
+                                color: Colors.white,
                                 fontFamily: 'Inter',
+                                fontWeight: FontWeight.w600,
                                 fontSize: 16,
                               ),
                             ),
-                            icon: const Icon(
-                              LucideIcons.chevronDown,
-                              color: Color(0xFF4B5563),
-                            ),
-                            items:
-                                ['Family', 'Friends', 'Relative', 'Colleague']
-                                    .map(
-                                      (e) => DropdownMenuItem(
-                                        value: e,
-                                        child: Text(e),
-                                      ),
-                                    )
-                                    .toList(),
-                            onChanged: (val) {
-                              if (val != null)
-                                controller.selectedRelation.value = val;
-                            },
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 24),
-                    // CTA: Save
-                    InkWell(
-                      onTap: controller.saveContact,
-                      borderRadius: BorderRadius.circular(60),
-                      child: Container(
-                        height: 56,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF098268),
-                          borderRadius: BorderRadius.circular(60),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'Save Contact',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
+                      const SizedBox(height: 16),
+                      // CTA: Cancel
+                      InkWell(
+                        onTap: () => Get.back(),
+                        borderRadius: BorderRadius.circular(60),
+                        child: Container(
+                          height: 56,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: const Color(0xFF717978)),
+                            borderRadius: BorderRadius.circular(60),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              'Cancel',
+                              style: TextStyle(
+                                color: Color(0xFF717978),
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 16),
-                    // CTA: Cancel
-                    InkWell(
-                      onTap: () => Get.back(),
-                      borderRadius: BorderRadius.circular(60),
-                      child: Container(
-                        height: 56,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: const Color(0xFF717978)),
-                          borderRadius: BorderRadius.circular(60),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'Cancel',
-                            style: TextStyle(
-                              color: Color(0xFF717978),
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       isScrollControlled: true,
@@ -940,13 +947,14 @@ class HomeView extends GetView<HomeController> {
                   fontSize: 16,
                 ),
                 border: InputBorder.none,
-                isCollapsed: true,
+                contentPadding: const EdgeInsets.symmetric(vertical: 0),
               ),
               style: const TextStyle(
                 fontFamily: 'Inter',
                 fontSize: 16,
                 color: Color(0xFF475569),
               ),
+              cursorColor: const Color(0xFF098268),
             ),
           ),
         ],
