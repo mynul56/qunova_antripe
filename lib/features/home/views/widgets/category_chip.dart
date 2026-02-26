@@ -16,8 +16,9 @@ class CategoryChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: onTap,
+      borderRadius: BorderRadius.circular(56),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 12.0),
         child: Column(

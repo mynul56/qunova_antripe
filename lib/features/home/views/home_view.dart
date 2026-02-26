@@ -46,13 +46,14 @@ class HomeView extends GetView<HomeController> {
                               controller: controller.tabController,
                               dividerColor: Colors.transparent,
                               indicatorColor: AppColors.primary,
-                              indicatorSize: TabBarIndicatorSize.label,
+                              indicatorSize: TabBarIndicatorSize.tab,
+                              indicatorWeight: 3.0,
                               labelColor: const Color(0xFF334155),
                               unselectedLabelColor: const Color(0xFF94A3B8),
                               labelPadding: EdgeInsets.zero,
                               labelStyle: const TextStyle(
                                 fontFamily: 'Inter',
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 16,
                               ),
                               tabs: const [
@@ -180,13 +181,15 @@ class HomeView extends GetView<HomeController> {
                       itemCount: controller.categories.length,
                       itemBuilder: (context, index) {
                         final category = controller.categories[index];
-                        final isSelected =
-                            controller.selectedCategoryId == category.id;
-                        return CategoryChip(
-                          category: category,
-                          isSelected: isSelected,
-                          onTap: () => controller.selectCategory(category.id),
-                        );
+                        return Obx(() {
+                          final isSelected =
+                              controller.selectedCategoryId == category.id;
+                          return CategoryChip(
+                            category: category,
+                            isSelected: isSelected,
+                            onTap: () => controller.selectCategory(category.id),
+                          );
+                        });
                       },
                     ),
                   );
