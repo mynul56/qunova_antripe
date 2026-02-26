@@ -37,7 +37,7 @@ class ContactItem extends StatelessWidget {
                       child: Container(color: Colors.white),
                     ),
                     errorWidget: (context, url, error) => Container(
-                      color: AppColors.primary.withOpacity(0.1),
+                      color: AppColors.primary.withValues(alpha: 0.1),
                       child: const Icon(
                         LucideIcons.user,
                         color: AppColors.primary,

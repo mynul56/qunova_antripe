@@ -14,18 +14,14 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(
-        0xFFF8FAFC,
-      ), // Slight off-white to match standard backgrounds, or white as per CSS
+      backgroundColor: const Color(0xFFF8FAFC), // Slight off-white to match standard backgrounds, or white as per CSS
       body: Stack(
         children: [
           SafeArea(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: 16,
-                ), // Padding to account for 60px absolute from top
+                const SizedBox(height: 16), // Padding to account for 60px absolute from top
                 // App Bar / Top Navigation (Contact / Recent)
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -70,9 +66,7 @@ class HomeView extends GetView<HomeController> {
                                     color: Color(0xFF94A3B8), // Slate/400
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 14,
-                                ), // Keeps alignment with the Contact text
+                                SizedBox(height: 14), // Keeps alignment with the Contact text
                               ],
                             ),
                           ],
@@ -88,18 +82,10 @@ class HomeView extends GetView<HomeController> {
                               // Expand search implementation
                               controller.isSearchVisible.toggle();
                             },
-                            child: const Icon(
-                              LucideIcons.search,
-                              size: 24,
-                              color: Color(0xFF4B5563),
-                            ),
+                            child: const Icon(LucideIcons.search, size: 24, color: Color(0xFF4B5563)),
                           ),
                           const SizedBox(width: 32),
-                          const Icon(
-                            LucideIcons.alignRight,
-                            size: 24,
-                            color: Color(0xFF4B5563),
-                          ),
+                          const Icon(LucideIcons.alignRight, size: 24, color: Color(0xFF4B5563)),
                         ],
                       ),
                     ],
@@ -110,23 +96,17 @@ class HomeView extends GetView<HomeController> {
 
                 // Search Input (Hidden by default based on Figma, toggle-able via controller)
                 Obx(() {
-                  if (!controller.isSearchVisible.value)
+                  if (!controller.isSearchVisible.value) {
                     return const SizedBox.shrink();
+                  }
                   return Padding(
-                    padding: const EdgeInsets.only(
-                      left: 20.0,
-                      right: 20.0,
-                      bottom: 16.0,
-                    ),
+                    padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 16.0),
                     child: TextField(
                       controller: controller.searchController,
                       onChanged: controller.onSearchChanged,
                       decoration: InputDecoration(
                         hintText: 'Search contacts...',
-                        hintStyle: const TextStyle(
-                          color: Color(0xFF94A3B8),
-                          fontSize: 14,
-                        ),
+                        hintStyle: const TextStyle(color: Color(0xFF94A3B8), fontSize: 14),
                         filled: true,
                         fillColor: Colors.white,
                         border: OutlineInputBorder(
@@ -137,10 +117,7 @@ class HomeView extends GetView<HomeController> {
                           borderRadius: BorderRadius.circular(16),
                           borderSide: BorderSide(color: Colors.grey.shade200),
                         ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 8,
-                          horizontal: 16,
-                        ),
+                        contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                       ),
                     ),
                   );
@@ -148,8 +125,9 @@ class HomeView extends GetView<HomeController> {
 
                 // Horizontal Categories Scroll
                 Obx(() {
-                  if (controller.categories.isEmpty)
+                  if (controller.categories.isEmpty) {
                     return const SizedBox(height: 82);
+                  }
 
                   return SizedBox(
                     height: 82,
@@ -159,8 +137,7 @@ class HomeView extends GetView<HomeController> {
                       itemCount: controller.categories.length,
                       itemBuilder: (context, index) {
                         final category = controller.categories[index];
-                        final isSelected =
-                            controller.selectedCategoryId == category.id;
+                        final isSelected = controller.selectedCategoryId == category.id;
                         return CategoryChip(
                           category: category,
                           isSelected: isSelected,
@@ -177,11 +154,7 @@ class HomeView extends GetView<HomeController> {
                 Expanded(
                   child: Obx(() {
                     if (controller.isLoading) {
-                      return const Center(
-                        child: CircularProgressIndicator(
-                          color: AppColors.primary,
-                        ),
-                      );
+                      return const Center(child: CircularProgressIndicator(color: AppColors.primary));
                     }
 
                     if (controller.hasError) {
@@ -190,24 +163,15 @@ class HomeView extends GetView<HomeController> {
 
                     if (controller.filteredList.isEmpty) {
                       return const Center(
-                        child: Text(
-                          'No contacts found',
-                          style: TextStyle(color: Color(0xFF64758B)),
-                        ),
+                        child: Text('No contacts found', style: TextStyle(color: Color(0xFF64758B))),
                       );
                     }
 
                     return ListView.builder(
-                      padding: const EdgeInsets.only(
-                        left: 20.0,
-                        right: 20.0,
-                        bottom: 80.0,
-                      ), // Bottom padding for FAB
+                      padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 80.0), // Bottom padding for FAB
                       itemCount: controller.filteredList.length,
                       itemBuilder: (context, index) {
-                        return ContactItem(
-                          contact: controller.filteredList[index],
-                        );
+                        return ContactItem(contact: controller.filteredList[index]);
                       },
                     );
                   }),
@@ -228,212 +192,112 @@ class HomeView extends GetView<HomeController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
+                    '1',
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
+                  ),
+                  Text(
                     'A',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'B',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'C',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'D',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'E',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'F',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'G',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'H',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'I',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'J',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'K',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'L',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'M',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'N',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'O',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'P',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'Q',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'R',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'S',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'T',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'U',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'V',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'W',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'X',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'Y',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                   Text(
                     'Z',
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: Color(0xFF64758B),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 6, color: Color(0xFF64758B), fontWeight: FontWeight.w500),
                   ),
                 ],
               ),
@@ -443,16 +307,11 @@ class HomeView extends GetView<HomeController> {
           // Floating Action Button
           Positioned(
             left: 276, // 294 - 18px internal SVG padding
-            top: 710, // 724 - 14px internal SVG padding
+            top: 790, // 724 - 14px internal SVG padding
             child: SizedBox(
               width: 104, // Full viewBox size including shadows
               height: 104,
-              child: SvgPicture.asset(
-                'assets/floating_action_button/icon.svg',
-                width: 104,
-                height: 104,
-                fit: BoxFit.none,
-              ),
+              child: SvgPicture.asset('assets/floating_action_button/icon.svg', width: 104, height: 104, fit: BoxFit.none),
             ),
           ),
         ],
