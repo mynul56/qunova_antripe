@@ -16,6 +16,8 @@ class HomeController extends GetxController {
   final _errorMessage = ''.obs;
   String get errorMessage => _errorMessage.value;
 
+  final isSearchVisible = false.obs;
+
   final categories = <Category>[].obs;
   final allContacts = <Contact>[].obs;
   final filteredList = <Contact>[].obs;
