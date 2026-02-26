@@ -4,8 +4,11 @@ import '../../../data/models/contact_response.dart';
 import '../../../data/services/home_service.dart';
 import '../../../data/services/api_service.dart';
 
-class HomeController extends GetxController {
+class HomeController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   final HomeService _homeService = HomeService(ApiService());
+
+  late TabController tabController;
 
   final _isLoading = true.obs;
   bool get isLoading => _isLoading.value;
@@ -31,6 +34,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    tabController = TabController(length: 2, vsync: this);
     fetchData();
 
     // Debounce search input for 400ms
@@ -43,6 +47,7 @@ class HomeController extends GetxController {
 
   @override
   void onClose() {
+    tabController.dispose();
     searchController.dispose();
     super.onClose();
   }

@@ -35,50 +35,31 @@ class HomeView extends GetView<HomeController> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      // Scrollable Tabs area
+                      // TabBar for Contact / Recent
                       Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Text(
-                                  'Contact',
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
-                                    color: Color(0xFF334155), // Slate/700
-                                  ),
-                                ),
-                                const SizedBox(height: 12),
-                                Container(
-                                  width: 68,
-                                  height: 2,
-                                  color: AppColors.primary, // 098268
-                                ),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: SizedBox(
+                            width: 180 * scale,
+                            child: TabBar(
+                              controller: controller.tabController,
+                              dividerColor: Colors.transparent,
+                              indicatorColor: AppColors.primary,
+                              indicatorSize: TabBarIndicatorSize.label,
+                              labelColor: const Color(0xFF334155),
+                              unselectedLabelColor: const Color(0xFF94A3B8),
+                              labelPadding: EdgeInsets.zero,
+                              labelStyle: const TextStyle(
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                              ),
+                              tabs: const [
+                                Tab(text: 'Contact'),
+                                Tab(text: 'Recent'),
                               ],
                             ),
-                            const SizedBox(width: 24),
-                            const Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  'Recent',
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
-                                    color: Color(0xFF94A3B8), // Slate/400
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 14,
-                                ), // Keeps alignment with the Contact text
-                              ],
-                            ),
-                          ],
+                          ),
                         ),
                       ),
 
