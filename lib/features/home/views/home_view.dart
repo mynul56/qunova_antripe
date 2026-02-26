@@ -442,15 +442,16 @@ class HomeView extends GetView<HomeController> {
 
           // Floating Action Button
           Positioned(
-            left: 294,
-            top: 724,
+            left: 276, // 294 - 18px internal SVG padding
+            top: 710, // 724 - 14px internal SVG padding
             child: SizedBox(
-              width: 64,
-              height: 64,
+              width: 104, // Full viewBox size including shadows
+              height: 104,
               child: SvgPicture.asset(
                 'assets/floating_action_button/icon.svg',
-                width: 64,
-                height: 64,
+                width: 104,
+                height: 104,
+                fit: BoxFit.none,
               ),
             ),
           ),
