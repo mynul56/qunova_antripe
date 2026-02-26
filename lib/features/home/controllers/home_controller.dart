@@ -39,6 +39,10 @@ class HomeController extends GetxController
   final companyController = TextEditingController();
   final selectedRelation = 'Relation'.obs;
 
+  // Country Selection
+  final selectedCountryFlag = '🇺🇸'.obs;
+  final selectedCountryCode = '+1'.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -78,6 +82,13 @@ class HomeController extends GetxController
     designationController.clear();
     companyController.clear();
     selectedRelation.value = 'Relation';
+    selectedCountryFlag.value = '🇺🇸';
+    selectedCountryCode.value = '+1';
+  }
+
+  void updateCountry(String flag, String code) {
+    selectedCountryFlag.value = flag;
+    selectedCountryCode.value = code;
   }
 
   void saveContact() {

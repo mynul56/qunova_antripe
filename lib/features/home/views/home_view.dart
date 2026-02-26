@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:country_picker/country_picker.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../controllers/home_controller.dart';
@@ -749,35 +750,48 @@ class HomeView extends GetView<HomeController> {
                     _buildBottomSheetField(
                       controller: controller.phoneController,
                       hint: 'Phone',
-                      prefix: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: Image.network(
-                              'https://flagcdn.com/w20/us.png',
-                              width: 24,
-                              height: 24,
-                              errorBuilder: (ctx, _, __) =>
-                                  const Icon(LucideIcons.flag, size: 20),
+                      prefix: GestureDetector(
+                        onTap: () {
+                          showCountryPicker(
+                            context: Get.context!,
+                            showPhoneCode: true,
+                            onSelect: (Country country) {
+                              controller.updateCountry(
+                                country.flagEmoji,
+                                '+${country.phoneCode}',
+                              );
+                            },
+                          );
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Obx(
+                              () => Text(
+                                controller.selectedCountryFlag.value,
+                                style: const TextStyle(fontSize: 20),
+                              ),
                             ),
-                          ),
-                          const Icon(
-                            LucideIcons.chevronDown,
-                            size: 20,
-                            color: Color(0xFF4B5563),
-                          ),
-                          const SizedBox(width: 8),
-                          const Text(
-                            '+880',
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 16,
-                              color: Color(0xFF374151),
+                            const SizedBox(width: 4),
+                            const Icon(
+                              LucideIcons.chevronDown,
+                              size: 20,
+                              color: Color(0xFF4B5563),
                             ),
-                          ),
-                          const SizedBox(width: 8),
-                        ],
+                            const SizedBox(width: 8),
+                            Obx(
+                              () => Text(
+                                controller.selectedCountryCode.value,
+                                style: const TextStyle(
+                                  fontFamily: 'Inter',
+                                  fontSize: 16,
+                                  color: Color(0xFF374151),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                          ],
+                        ),
                       ),
                     ),
                     const SizedBox(height: 16),

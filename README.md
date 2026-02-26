@@ -18,6 +18,7 @@ A professional Flutter application for managing contacts, featuring creative ani
 - **[Flutter SVG](https://pub.dev/packages/flutter_svg)**: Renders high-quality vector graphics for FAB and logos.
 - **[Google Fonts](https://pub.dev/packages/google_fonts)**: Dynamically loads the **Inter** font family as specified in the UI design.
 - **[Lucide Icons](https://pub.dev/packages/lucide_icons)**: Provides modern, consistent iconography.
+- **[Country Picker](https://pub.dev/packages/country_picker)**: Enables elegant, interactive country flag and phone prefix selection.
 - **[Cached Network Image](https://pub.dev/packages/cached_network_image)**: Efficiently fetches and caches contact avatars to reduce data usage.
 - **[Shimmer](https://pub.dev/packages/shimmer)**: Provides elegant loading placeholders (skeleton screens) while data is being fetched.
 
