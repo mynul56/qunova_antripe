@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../controllers/home_controller.dart';
+import 'widgets/blob_shape.dart';
 import 'widgets/category_chip.dart';
 import 'widgets/contact_item.dart';
 
@@ -445,10 +446,10 @@ class HomeView extends GetView<HomeController> {
             child: Container(
               width: 64,
               height: 64,
-              decoration: BoxDecoration(
+              decoration: ShapeDecoration(
                 color: AppColors.primary,
-                shape: BoxShape.circle,
-                boxShadow: [
+                shape: const BlobShape(),
+                shadows: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.15),
                     offset: const Offset(2, 6),
