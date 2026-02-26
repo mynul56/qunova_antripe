@@ -68,10 +68,7 @@ class HomeView extends GetView<HomeController> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           GestureDetector(
-                            onTap: () {
-                              // Expand search implementation
-                              controller.isSearchVisible.toggle();
-                            },
+                            onTap: controller.toggleSearch,
                             child: const Icon(
                               LucideIcons.search,
                               size: 24,
@@ -79,10 +76,19 @@ class HomeView extends GetView<HomeController> {
                             ),
                           ),
                           const SizedBox(width: 32),
-                          const Icon(
-                            LucideIcons.alignRight,
-                            size: 24,
-                            color: Color(0xFF4B5563),
+                          GestureDetector(
+                            onTap: () {
+                              Get.snackbar(
+                                'Menu',
+                                'Menu clicked',
+                                snackPosition: SnackPosition.BOTTOM,
+                              );
+                            },
+                            child: const Icon(
+                              LucideIcons.alignRight,
+                              size: 24,
+                              color: Color(0xFF4B5563),
+                            ),
                           ),
                         ],
                       ),
@@ -187,37 +193,84 @@ class HomeView extends GetView<HomeController> {
 
                 const SizedBox(height: 20),
 
-                // Main Contact List
+                // Main Contact List with TabBarView
                 Expanded(
-                  child: Obx(() {
-                    if (controller.isLoading &&
-                        controller.allContacts.isEmpty) {
-                      return _buildListLoading();
-                    }
+                  child: TabBarView(
+                    controller: controller.tabController,
+                    children: [
+                      // Contact Tab
+                      Obx(() {
+                        if (controller.isLoading &&
+                            controller.allContacts.isEmpty) {
+                          return _buildListLoading();
+                        }
 
-                    if (controller.hasError) {
-                      return _buildErrorState();
-                    }
+                        if (controller.hasError) {
+                          return _buildErrorState();
+                        }
 
-                    if (controller.filteredList.isEmpty) {
-                      return _buildEmptyState();
-                    }
+                        if (controller.filteredList.isEmpty) {
+                          return _buildEmptyState();
+                        }
 
-                    return ListView.builder(
-                      padding: const EdgeInsets.only(
-                        left: 20.0,
-                        right: 20.0,
-                        bottom: 100.0,
-                      ), // Bottom padding for FAB
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: controller.filteredList.length,
-                      itemBuilder: (context, index) {
-                        return ContactItem(
-                          contact: controller.filteredList[index],
+                        return ListView.builder(
+                          padding: const EdgeInsets.only(
+                            left: 20.0,
+                            right: 20.0,
+                            bottom: 100.0,
+                          ),
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: controller.filteredList.length,
+                          itemBuilder: (context, index) {
+                            final contact = controller.filteredList[index];
+                            return ContactItem(
+                              contact: contact,
+                              onTap: () => controller.addToRecent(contact),
+                            );
+                          },
                         );
-                      },
-                    );
-                  }),
+                      }),
+                      // Recent Tab
+                      Obx(() {
+                        if (controller.recentContacts.isEmpty) {
+                          return Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  LucideIcons.clock,
+                                  size: 64,
+                                  color: Colors.grey[300],
+                                ),
+                                const SizedBox(height: 16),
+                                const Text(
+                                  'No recent contacts',
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+
+                        return ListView.builder(
+                          padding: const EdgeInsets.only(
+                            left: 20.0,
+                            right: 20.0,
+                            bottom: 100.0,
+                          ),
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: controller.recentContacts.length,
+                          itemBuilder: (context, index) {
+                            final contact = controller.recentContacts[index];
+                            return ContactItem(
+                              contact: contact,
+                              onTap: () => controller.addToRecent(contact),
+                            );
+                          },
+                        );
+                      }),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -788,10 +841,7 @@ class HomeView extends GetView<HomeController> {
                     const SizedBox(height: 24),
                     // CTA: Save
                     InkWell(
-                      onTap: () {
-                        // Future: Implement save
-                        Get.back();
-                      },
+                      onTap: controller.saveContact,
                       borderRadius: BorderRadius.circular(60),
                       child: Container(
                         height: 56,
