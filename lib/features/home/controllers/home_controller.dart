@@ -24,6 +24,7 @@ class HomeController extends GetxController
   final categories = <Category>[].obs;
   final allContacts = <Contact>[].obs;
   final filteredList = <Contact>[].obs;
+  final recentContacts = <Contact>[].obs;
 
   final _selectedCategoryId = 'all'.obs;
   String get selectedCategoryId => _selectedCategoryId.value;
@@ -63,12 +64,64 @@ class HomeController extends GetxController
     super.onClose();
   }
 
+  void toggleSearch() {
+    isSearchVisible.value = !isSearchVisible.value;
+    if (!isSearchVisible.value) {
+      searchController.clear();
+      onSearchChanged('');
+    }
+  }
+
   void clearAddContactForm() {
     nameController.clear();
     phoneController.clear();
     designationController.clear();
     companyController.clear();
     selectedRelation.value = 'Relation';
+  }
+
+  void saveContact() {
+    if (nameController.text.isEmpty || phoneController.text.isEmpty) {
+      Get.snackbar(
+        'Error',
+        'Name and Phone are required',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+      return;
+    }
+
+    final newContact = Contact(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      name: nameController.text,
+      phone: phoneController.text,
+      categoryId: selectedRelation.value.toLowerCase(),
+      avatarUrl: '', // Corrected from image
+      isEmpty: false, // Required parameter
+    );
+
+    allContacts.insert(0, newContact);
+    recentContacts.insert(0, newContact); // Add to recent as well
+    _filterData();
+    clearAddContactForm();
+    Get.back();
+    Get.snackbar(
+      'Success',
+      'Contact saved successfully',
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: const Color(0xFF098268),
+      colorText: Colors.white,
+    );
+  }
+
+  void addToRecent(Contact contact) {
+    if (!recentContacts.contains(contact)) {
+      recentContacts.insert(0, contact);
+    } else {
+      recentContacts.remove(contact);
+      recentContacts.insert(0, contact);
+    }
   }
 
   Future<void> fetchData() async {

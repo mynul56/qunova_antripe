@@ -7,8 +7,9 @@ import '../../../../data/models/contact_response.dart';
 
 class ContactItem extends StatelessWidget {
   final Contact contact;
+  final VoidCallback? onTap;
 
-  const ContactItem({super.key, required this.contact});
+  const ContactItem({super.key, required this.contact, this.onTap});
 
   @override
   Widget build(BuildContext context) {
