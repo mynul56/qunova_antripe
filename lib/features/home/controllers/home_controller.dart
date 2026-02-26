@@ -31,6 +31,13 @@ class HomeController extends GetxController
   final searchController = TextEditingController();
   final _searchText = ''.obs;
 
+  // Add Contact Form Controllers
+  final nameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final designationController = TextEditingController();
+  final companyController = TextEditingController();
+  final selectedRelation = 'Relation'.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -49,7 +56,19 @@ class HomeController extends GetxController
   void onClose() {
     tabController.dispose();
     searchController.dispose();
+    nameController.dispose();
+    phoneController.dispose();
+    designationController.dispose();
+    companyController.dispose();
     super.onClose();
+  }
+
+  void clearAddContactForm() {
+    nameController.clear();
+    phoneController.clear();
+    designationController.clear();
+    companyController.clear();
+    selectedRelation.value = 'Relation';
   }
 
   Future<void> fetchData() async {
